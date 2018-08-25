@@ -68,15 +68,13 @@ void Game::startGame() {
 
 void Game::play(){
 
-    while (true) {
-        nowPlaying(player1);
+    do{
+        displayBoard();
+        nowPlaying(getCurrentPlayer());
         gameStatus = checkGameStatus();
-        if (gameStatus != 'N') break;
-        nowPlaying(player2);
-        gameStatus = checkGameStatus();
-        if (gameStatus != 'N') break;
-    }
-    cout << "Game is over. Final board:" << endl;
+    } while (gameStatus == 'N');
+
+    cout << "\nGame is over. Final board:" << endl;
     displayBoard();
     //exit(0);
 }
@@ -117,7 +115,7 @@ char Game::checkGameStatus() {
             cout << "Game is draw." << endl;
             break;
         default:    //case 'N' - game is not over yet
-            cout << "Game underway. Keep playing." << endl;
+            cout << "Keep playing." << endl;
     }
     return gameStatus;
 }
@@ -135,7 +133,6 @@ bool Game::isMoveLegit(Cell &move) {
 }
 
 void Game::nowPlaying(Player *player) {
-    displayBoard();     // Board before playing the move
     cout << "\nPlayer " << player->getSign() << " plays" << endl;
     Cell move = Cell();
     do {
@@ -145,17 +142,28 @@ void Game::nowPlaying(Player *player) {
 
     // Legal move - place the player's marker on the selected cell on the game board
     board[move.getI()][move.getJ()].setSign(player->getSign());
-    //displayBoard();    // Board after playing the move
+    player->hasPlayed = true;
 }
 
-Player& Game::currentPlayer() {
+Player *Game::getCurrentPlayer() {
     if (!player1->hasPlayed){
-        return *player1;
+        player2->hasPlayed = false;
+        return player1;
     }
     else {
-        return *player2;
+        player1->hasPlayed = false;
+        return player2;
     }
 }
+
+Player *Game::getOpponent() {
+    if (player1->hasPlayed){
+        return player2;
+    } else{
+        return player1;
+    }
+}
+
 
 
 

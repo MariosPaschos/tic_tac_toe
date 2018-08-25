@@ -23,7 +23,8 @@ public:
     bool isMoveLegit(Cell &move);
     void play();
     bool isBoardFinal();
-    Player& currentPlayer();
+    Player *getCurrentPlayer();
+    Player *getOpponent();
     char checkGameStatus();
     char checkForWinner();
 private:

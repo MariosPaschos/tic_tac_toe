@@ -74,7 +74,7 @@ namespace utils {
             char sign = board[0][j].getSign();   // The first cell of each column is the pivot element
             count = 0;
             for (size_t i = 0; i < board.size(); ++i) {
-                if (board[i][j].getSign() != sign){
+                if (board[i][j].getSign() == sign){
                     count++;
                 }
             }

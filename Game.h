@@ -24,7 +24,6 @@ public:
     void play();
     bool isBoardFinal();
     Player *getCurrentPlayer();
-    Player *getOpponent();
     char checkGameStatus();
     char checkForWinner();
 private:

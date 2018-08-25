@@ -87,12 +87,14 @@ namespace utils {
 
     char checkFstDiagonal(const vector<vector<Cell> > &board) {
 
-        char sign = '_';
         size_t count = 0;
+        char sign = board[0][0].getSign();   // Check the cells of the main diagonal
+
         for (size_t i = 0; i < board.size(); ++i) {
-            sign = board[i][0].getSign();   // Check the cells of the main diagonal
             if (board[i][i].getSign() == sign){
                 count++;
+            } else {
+                break;
             }
         }
         if (count == board.size() && (sign != '_')){
@@ -105,11 +107,12 @@ namespace utils {
 
         int count = 0;
         char sign = board[0][board.size() - 1].getSign();
-        size_t size = board.size() - 1;
 
-        for (size_t j = (size); j > -1; j--) {
-            if (board[size-j][j].getSign() == sign) {
+        for (int j = (static_cast<int>(board.size()) - 1); j > -1; j--) {
+            if (board[(board.size() - 1) - j][j].getSign() == sign) {
                 count++;
+            } else{
+                break;
             }
         }
         if (count == board.size() && (sign != '_')){

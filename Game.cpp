@@ -74,7 +74,7 @@ void Game::play(){
         gameStatus = checkGameStatus();
     } while (gameStatus == 'N');
 
-    cout << "\nGame is over. Final board:" << endl;
+    //cout << "\nGame is over. Final board:" << endl;
     displayBoard();
     //exit(0);
 }
@@ -156,13 +156,6 @@ Player *Game::getCurrentPlayer() {
     }
 }
 
-Player *Game::getOpponent() {
-    if (player1->hasPlayed){
-        return player2;
-    } else{
-        return player1;
-    }
-}
 
 
 

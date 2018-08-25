@@ -50,11 +50,10 @@ namespace utils {
     }
 
     char checkRows(const vector<vector<Cell> > &board) {
-        char sign = '_';
-        size_t count = 0;
 
+        size_t count = 0;
         for (size_t i = 0; i < board.size(); ++i) {
-            sign = board[i][0].getSign();   // The first cell of each row is the pivot element
+            char sign = board[i][0].getSign();   // The first cell of each row is the pivot element
             count = 0;
             for (size_t j = 0; j < board.size(); ++j) {
                 if (board[i][j].getSign() == sign){
@@ -69,11 +68,10 @@ namespace utils {
     }
 
     char checkColumns(const vector<vector<Cell> > &board) {
-        char sign = '_';
-        size_t count = 0;
 
+        size_t count = 0;
         for (size_t j = 0; j < board.size(); ++j) {
-            sign = board[0][j].getSign();   // The first cell of each column is the pivot element
+            char sign = board[0][j].getSign();   // The first cell of each column is the pivot element
             count = 0;
             for (size_t i = 0; i < board.size(); ++i) {
                 if (board[i][j].getSign() != sign){
@@ -88,9 +86,9 @@ namespace utils {
     }
 
     char checkFstDiagonal(const vector<vector<Cell> > &board) {
+
         char sign = '_';
         size_t count = 0;
-
         for (size_t i = 0; i < board.size(); ++i) {
             sign = board[i][0].getSign();   // Check the cells of the main diagonal
             if (board[i][i].getSign() == sign){
@@ -104,6 +102,7 @@ namespace utils {
     }
 
     char checkSndDiagonal(const vector<vector<Cell> > &board){
+
         int count = 0;
         char sign = board[0][board.size() - 1].getSign();
         size_t size = board.size() - 1;
@@ -122,12 +121,12 @@ namespace utils {
     char checkBoardForWinner(const vector<vector<Cell> > &board){
 
         // Check the rows
-        char rows = checkRows(board);
-        if (rows != 'N') return rows;
+        char row = checkRows(board);
+        if (row != 'N') return row;
 
         // Check the columns
-        char cols = checkColumns(board);
-        if (cols != 'N') return cols;
+        char col = checkColumns(board);
+        if (col != 'N') return col;
 
         //Check main diagonal
         char fstDiag = checkFstDiagonal(board);

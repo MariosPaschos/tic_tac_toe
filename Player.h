@@ -15,18 +15,18 @@ class Player {
 public:
     explicit Player(char sign, const vector<vector<Cell> > &board);
     virtual ~Player() = default;
-
     virtual const Cell makeMove() = 0;
     char getSign() const;
     const vector<vector<Cell> > &getBoard() const ;
-    vector<Cell> getAvailableMoves() const;
+    const vector<Cell> getAvailableMoves() const;
+    bool hasPlayed;
 private:
     char sign;
     const vector<vector<Cell> > &board;
     size_t SIZE;
 
     // Private and without implementation to avoid duplicate Player instances-each player is unique
-    Player(const Player &player);
+    Player(const Player &player) = default;
     Player &operator=(const Player &player);
 };
 

@@ -22,12 +22,10 @@ public:
     void nowPlaying(Player *player);
     bool isMoveLegit(Cell &move);
     void play();
-    bool isDraw();
-    bool isWinnerX();
-    bool isWinnerO();
-    bool isGameOver();
-    void checkGameStatus();
-    char checkWinner();
+    bool isBoardFinal();
+    Player& currentPlayer();
+    char checkGameStatus();
+    char checkForWinner();
 private:
     size_t SIZE;
     vector<vector<Cell> > board;

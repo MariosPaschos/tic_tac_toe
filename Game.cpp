@@ -26,32 +26,37 @@ void Game::displayBoard() const {
 
 void Game::selectPlayer() {
     char sign;
-    while (true){
-        cout << "Select player: (X/O)" << endl;
-        try {
-            cin >> sign;
-            sign = static_cast<char>(toupper(sign));
-            if (isPlayerValid(sign)) {
-                switch (sign) {
-                    case 'X':
-                        player1 = new Human('X', board);
-                        player2 = new Machine('O', board);
-                        break;
-                    case 'O':
-                        player1 = new Machine('X', board);
-                        player2 = new Human('O', board);
-                        break;
-                    default:
-                        clog << "Player selection unsuccessful. Return to selection." << endl;
-                        continue;
-                }
-                return;
-            }
-        }
-        catch (int error){
-            clog << "Error in player selection: " + to_string(error) << endl;
-        }
-    }
+
+    //Machine vs Machine
+    player1 = new Machine('X', board);
+    player2 = new Machine('O', board);
+
+//    while (true){
+//        cout << "Select player: (X/O)" << endl;
+//        try {
+//            cin >> sign;
+//            sign = static_cast<char>(toupper(sign));
+//            if (isPlayerValid(sign)) {
+//                switch (sign) {
+//                    case 'X':
+//                        player1 = new Human('X', board);
+//                        player2 = new Machine('O', board);
+//                        break;
+//                    case 'O':
+//                        player1 = new Machine('X', board);
+//                        player2 = new Human('O', board);
+//                        break;
+//                    default:
+//                        clog << "Player selection unsuccessful. Return to selection." << endl;
+//                        continue;
+//                }
+//                return;
+//            }
+//        }
+//        catch (int error){
+//            clog << "Error in player selection: " + to_string(error) << endl;
+//        }
+//    }
 }
 
 void Game::startGame() {
@@ -62,15 +67,17 @@ void Game::startGame() {
 }
 
 void Game::play(){
-    while (gameStatus == 'N') {
+
+    while (true) {
         nowPlaying(player1);
-        checkGameStatus();
-
+        gameStatus = checkGameStatus();
+        if (gameStatus != 'N') break;
         nowPlaying(player2);
-        checkGameStatus();
+        gameStatus = checkGameStatus();
+        if (gameStatus != 'N') break;
     }
+    cout << "Game is over. Final board:" << endl;
     displayBoard();
-
     //exit(0);
 }
 
@@ -87,33 +94,18 @@ bool Game::isPlayerValid(char sign) {
     return sign == 'X' || sign == 'O';
 }
 
-
-char Game::checkWinner(){
+char Game::checkForWinner(){
     return utils::checkBoardForWinner(board);
 }
 
+bool Game::isBoardFinal() {
+    return utils::isBoardFull(board);
+}
+
 // Check whether someone won, or if the board is full and the game ended as draw
-bool Game::isGameOver() {
-    return isDraw() || isWinnerX() || isWinnerO();
-}
+char Game::checkGameStatus() {
 
-bool Game::isDraw() {
-    return utils::isBoardFull(board) && (checkWinner() == 'N');
-}
-
-bool Game::isWinnerX() {
-    return checkWinner() == 'X';
-}
-
-bool Game::isWinnerO() {
-    return checkWinner() == 'O';
-}
-
-void Game::checkGameStatus() {
-    bool gameOver = isGameOver();
-    if (gameOver){
-        gameStatus = checkWinner();
-    }
+    gameStatus = checkForWinner();
     switch (gameStatus) {
         case 'X':
             cout << "Player 1 (X) won!" << endl;
@@ -124,9 +116,10 @@ void Game::checkGameStatus() {
         case 'D':
             cout << "Game is draw." << endl;
             break;
-        default:    //case 'N'
+        default:    //case 'N' - game is not over yet
             cout << "Game underway. Keep playing." << endl;
     }
+    return gameStatus;
 }
 
 bool Game::isMoveLegit(Cell &move) {
@@ -142,17 +135,28 @@ bool Game::isMoveLegit(Cell &move) {
 }
 
 void Game::nowPlaying(Player *player) {
-    displayBoard();
+    displayBoard();     // Board before playing the move
     cout << "\nPlayer " << player->getSign() << " plays" << endl;
-    Cell move;
+    Cell move = Cell();
     do {
         move = player->makeMove();  // Player makes a move
     }
     while (!isMoveLegit(move));
 
-    // Legal move - place the marker on the corresponding cell
+    // Legal move - place the player's marker on the selected cell on the game board
     board[move.getI()][move.getJ()].setSign(player->getSign());
+    //displayBoard();    // Board after playing the move
 }
+
+Player& Game::currentPlayer() {
+    if (!player1->hasPlayed){
+        return *player1;
+    }
+    else {
+        return *player2;
+    }
+}
+
 
 
 

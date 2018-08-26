@@ -27,43 +27,40 @@ void Game::displayBoard() const {
 void Game::selectPlayer() {
     char sign;
 
-    //Machine vs Machine
-    player1 = new Machine('X', board);
-    player2 = new Machine('O', board);
-
-//    while (true){
-//        cout << "Select player: (X/O)" << endl;
-//        try {
-//            cin >> sign;
-//            sign = static_cast<char>(toupper(sign));
-//            if (isPlayerValid(sign)) {
-//                switch (sign) {
-//                    case 'X':
-//                        player1 = new Human('X', board);
-//                        player2 = new Machine('O', board);
-//                        break;
-//                    case 'O':
-//                        player1 = new Machine('X', board);
-//                        player2 = new Human('O', board);
-//                        break;
-//                    default:
-//                        clog << "Player selection unsuccessful. Return to selection." << endl;
-//                        continue;
-//                }
-//                return;
-//            }
-//        }
-//        catch (int error){
-//            clog << "Error in player selection: " + to_string(error) << endl;
-//        }
-//    }
+    while (true){
+        cout << "Select player: (X/O)" << endl;
+        try {
+            cin >> sign;
+            sign = static_cast<char>(toupper(sign));
+            if (isPlayerValid(sign)) {
+                switch (sign) {
+                    case 'X':
+                        player1 = new Human('X', board);
+                        player2 = new Machine('O', board);
+                        break;
+                    case 'O':
+                        player1 = new Machine('X', board);
+                        player2 = new Human('O', board);
+                        break;
+                    default:
+                        clog << "Player selection unsuccessful. Return to selection." << endl;
+                        continue;
+                }
+                return;
+            }
+        }
+        catch (int error){
+            clog << "Error in player selection: " + to_string(error) << endl;
+        }
+    }
 }
 
 void Game::startGame() {
     resetBoard();
     displayBoard();
-    selectPlayer();
+    selectGameMode();
     play();
+    replay();
 }
 
 void Game::play(){
@@ -74,11 +71,10 @@ void Game::play(){
         gameStatus = checkGameStatus();
     } while (gameStatus == 'N');
 
-    //cout << "\nGame is over. Final board:" << endl;
+    cout << "\nGame is over. Final board:" << endl;
     displayBoard();
     //exit(0);
 }
-
 
 bool Game::isMoveValid(Cell &cell) {
     return (cell.getI() > -1) && (cell.getI() < SIZE) && (cell.getJ() > -1) && (cell.getJ() < SIZE);
@@ -155,6 +151,57 @@ Player *Game::getCurrentPlayer() {
         return player2;
     }
 }
+
+void Game::selectGameMode() {
+    bool modeSelected = false;
+    char mode = 'u';
+    while  (!modeSelected){
+        cout << "Do you want to play against the program (P) or watch a match between 2 programs (W)? " << endl;
+        cin >> mode;
+        mode = static_cast<char>(toupper(mode));
+        if (!(mode == 'P' || mode == 'W')){
+            continue;
+        }
+        else if (mode == 'P'){
+            selectPlayer();
+            modeSelected = true;
+        }
+        else if (mode == 'W'){
+            watchGame();
+            modeSelected = true;
+        }
+    }
+}
+
+void Game::watchGame() {
+
+    //Machine vs Machine
+    player1 = new Machine('X', board);
+    player2 = new Machine('O', board);
+}
+
+void Game::replay() {
+    char choice = 'N';
+    bool selected = false;
+    while (!selected){
+        cout << "Do you want to play again? Y/N" << endl;
+        cin >> choice;
+        choice = static_cast<char>(toupper(choice));
+        switch (choice) {
+            case 'Y':
+                selected = true;
+                break;
+            case 'N' :
+                cout << "Thank you for playing! Bye!" << endl;
+                clog << "Program terminates...";
+                exit(0);
+            default:
+                continue;
+        }
+    }
+    startGame();
+}
+
 
 
 

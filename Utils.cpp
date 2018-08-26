@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "Utils.h"
 
 namespace utils {
@@ -25,15 +26,17 @@ namespace utils {
     }
 
     // Displays the 2D board on the screen
+    // For resizable border alignment the formula is:   (board_size * 3) + (board_size + 3)
     void showBoard(const vector<vector<Cell> > &board) {
+        int size = static_cast<int >(board.size());
 
-        cout << "---------------" << endl;
+        cout <<setfill('-') << setw(size * 3 + (size + 3)) << "-" << endl;
         for (int i = 0; i < board.size(); ++i) {
             cout << " | ";
             for (int j = 0; j < board.size(); ++j) {
                 cout << board[i][j].getSign() << " | ";
             }
-            cout << endl << "---------------" << endl;
+            cout << endl << setfill('-') << setw(size * 3 + (size + 3)) << "-" << endl;
         }
         cout << endl;
     }

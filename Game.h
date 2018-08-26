@@ -18,10 +18,13 @@ public:
     bool isMoveLegal(Cell &cell);
     inline bool isPlayerValid(char sign);
     void startGame();
+    void selectGameMode();
     void selectPlayer();
+    void watchGame();
     void nowPlaying(Player *player);
     bool isMoveLegit(Cell &move);
     void play();
+    void replay();
     bool isBoardFinal();
     Player *getCurrentPlayer();
     char checkGameStatus();

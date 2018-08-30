@@ -10,6 +10,10 @@
 using namespace std;
 
 class Cell {
+private:
+    int i;
+    int j;
+    char sign;
 public:
     Cell();
     explicit Cell(int i, int j);
@@ -22,12 +26,8 @@ public:
     void setSign(char sign);
     bool isEmpty() const;
 
-private:
-    int i;
-    int j;
-    char sign;
 
-friend std::ostream &operator<<(std::ostream &os, const Cell &cell);
+    friend std::ostream &operator<<(std::ostream &os, const Cell &cell);
 };
 
 

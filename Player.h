@@ -20,13 +20,16 @@ public:
     const vector<vector<Cell> > &getBoard() const ;
     const vector<Cell> getAvailableMoves() const;
     bool hasPlayed;
+
+
+
 private:
     char sign;
     const vector<vector<Cell> > &board;
     size_t SIZE;
 
-    // Private and without implementation to avoid duplicate Player instances-each player is unique
-    Player(const Player &player) = default;
+    // Private and without implementation to avoid duplicate Player instances - each player is unique
+    Player(const Player &player);
     Player &operator=(const Player &player);
 };
 

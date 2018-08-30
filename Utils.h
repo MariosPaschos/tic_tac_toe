@@ -1,13 +1,12 @@
 #ifndef TIC_TAC_TOE_UTILS_H
 #define TIC_TAC_TOE_UTILS_H
 
-
-
 #include "Cell.h"
+#include "Player.h"
 
 #include <iostream>
 #include <vector>
-#include <typeinfo>
+
 
 using namespace std;
 
@@ -23,9 +22,7 @@ namespace utils {
     char checkFstDiagonal(const vector<vector<Cell> > &board);
     char checkSndDiagonal(const vector<vector<Cell> > &board);
     char checkBoardForWinner(const vector<vector<Cell> > &board);
-
-};
-
+}
 
 
 

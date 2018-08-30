@@ -1,5 +1,7 @@
-#include <iomanip>
 #include "Utils.h"
+
+#include <iomanip>
+
 
 namespace utils {
 
@@ -147,5 +149,6 @@ namespace utils {
         // If not tic tac toe was found and the board is not full yet return 'N' (None wins)
         return 'N';
     }
+
 
 }

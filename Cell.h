@@ -26,7 +26,6 @@ public:
     void setSign(char sign);
     bool isEmpty() const;
 
-
     friend std::ostream &operator<<(std::ostream &os, const Cell &cell);
 };
 

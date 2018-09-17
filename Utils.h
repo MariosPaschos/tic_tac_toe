@@ -22,6 +22,7 @@ namespace utils {
     char checkFstDiagonal(const vector<vector<Cell> > &board);
     char checkSndDiagonal(const vector<vector<Cell> > &board);
     char checkBoardForWinner(const vector<vector<Cell> > &board);
+
 }
 
 

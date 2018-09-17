@@ -7,6 +7,19 @@
 
 
 class Game {
+private:
+    size_t SIZE;
+    vector<vector<Cell> > board;
+    Player *player1;
+    Player *player2;
+    char gameStatus;
+    vector<vector<Cell> > finalBoard;
+
+    // Private and without implementation to avoid duplicate Game instances-each game is unique
+    Game();
+    Game(const Game&);
+    Game&operator=(const Game&);
+
 public:
     explicit Game(size_t SIZE);
     ~Game()= default;
@@ -29,17 +42,9 @@ public:
     Player *getCurrentPlayer();
     char checkGameStatus();
     char checkForWinner();
-private:
-    size_t SIZE;
-    vector<vector<Cell> > board;
-    Player *player1;
-    Player *player2;
-    char gameStatus;
+    char getGameStatus() const;
+    const vector<vector<Cell>> &getFinalBoard() const;
 
-    // Private and without implementation to avoid duplicate Game instances-each game is unique
-    Game();
-    Game(const Game&);
-    Game&operator=(const Game&);
 };
 
 

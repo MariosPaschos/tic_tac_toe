@@ -7,7 +7,7 @@
 #include <vector>
 
 
-class Node : Cell {
+class Node : public Cell {
 private:
     const Node *parent;
     vector<Node> children;

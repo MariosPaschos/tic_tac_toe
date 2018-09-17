@@ -72,6 +72,7 @@ void Game::play(){
     } while (gameStatus == 'N');
 
     cout << "\nGame is over. Final board:" << endl;
+    this->finalBoard = board;
     displayBoard();
     //exit(0);
 }
@@ -200,6 +201,14 @@ void Game::replay() {
         }
     }
     startGame();
+}
+
+const vector<vector<Cell>> &Game::getFinalBoard() const {
+    return this->finalBoard;
+}
+
+char Game::getGameStatus() const {
+    return this->gameStatus;
 }
 
 

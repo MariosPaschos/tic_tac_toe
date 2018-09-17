@@ -150,5 +150,4 @@ namespace utils {
         return 'N';
     }
 
-
 }

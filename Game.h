@@ -15,8 +15,6 @@ private:
     char gameStatus;
     vector<vector<Cell> > finalBoard;
 
-    // Private and without implementation to avoid duplicate Game instances-each game is unique
-    Game();
     Game(const Game&);
     Game&operator=(const Game&);
 
@@ -45,6 +43,8 @@ public:
     char getGameStatus() const;
     const vector<vector<Cell>> &getFinalBoard() const;
 
+// Private and without implementation to avoid duplicate Game instances-each game is unique
+    Game();
 };
 
 

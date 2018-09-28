@@ -11,6 +11,7 @@ public:
     ~Human() override = default;
 
     const Cell makeMove() override;
+    int userInput();
 };
 
 

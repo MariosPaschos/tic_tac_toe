@@ -78,6 +78,7 @@ void Game::play(){
 }
 
 bool Game::isMoveValid(Cell &cell) {
+
     return (cell.getI() > -1) && (cell.getI() < SIZE) && (cell.getJ() > -1) && (cell.getJ() < SIZE);
 }
 
@@ -126,13 +127,15 @@ bool Game::isMoveLegit(Cell &move) {
         cout << "Illegal move. Selected cell is not empty." << endl;
         return false;
     }
+
     return true;
 }
 
+//TODO -> WHEN HUMAN ENTERS A COMBINATION OF CHARACTERS AND NUMBERS THE GAME GOES INTO AN INFINITE LOOP ->FIX
 void Game::nowPlaying(Player *player) {
-    cout << "\nPlayer " << player->getSign() << " plays" << endl;
     Cell move = Cell();
     do {
+        cout << "\nPlayer " << player->getSign() << " plays." << endl;
         move = player->makeMove();  // Player makes a move
     }
     while (!isMoveLegit(move));

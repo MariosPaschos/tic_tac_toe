@@ -1,7 +1,7 @@
 #include "Cell.h"
 
 // Default constructor
-Cell::Cell() : i(-99), j(-99), sign('_') {}
+Cell::Cell() : i(-1), j(-1), sign('_') {}
 
 Cell::Cell(int i, int j) : i(i), j(j) , sign('_') {}
 

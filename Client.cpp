@@ -1,6 +1,6 @@
 #include "Client.h"
 
-Client::Client() : client(socket(AF_INET, SOCK_STREAM, 0)), portNum(1500), isExit(false), bufsize(1024), buffer(), ip("127.0.0.1") {
+Client::Client() : client(socket(AF_INET, SOCK_STREAM, 0)), portNum(1502), isExit(false), bufsize(1), buffer(), ip("127.0.0.1") {
 
     startClient();
 }
@@ -23,30 +23,19 @@ int Client::startClient() {
     cout << "=> Connection confirmed...";
 
 
-    cout << "\n\n=> Enter # to end the connection\n" << endl;
+    cout << "\n\n=> Enter Ctrl-C to end the connection\n" << endl;
     do {
-        cout << "Client: ";
         do {
+            cout << "Player: ";
             cin >> buffer;
             send(client, buffer, bufsize, 0);
-            if (*buffer == '#') {
-                send(client, buffer, bufsize, 0);
-                *buffer = '*';
-                isExit = true;
-            }
-        } while (*buffer != '*');
+        } while (! send(client, buffer, bufsize, 0));
 
-        cout << "Server: ";
         do {
+            cout << "Wait for server..." << endl;
             recv(client, buffer, bufsize, 0);
-            cout << buffer << " ";
-            if (*buffer == '#') {
-                *buffer = '*';
-                isExit = true;
-            }
-
-        } while (*buffer != '*');
-        cout << endl;
+            cout << "Server: " << buffer << " " << endl;
+        } while (! recv(client, buffer, bufsize, 0));
 
     } while (!isExit);
 
@@ -57,9 +46,9 @@ int Client::startClient() {
 }
 
 
-int main(){
-
-    Client client = Client();
-
-    return 0;
-}
+//int main(){
+//
+//    Client client = Client();
+//
+//    return 0;
+//}

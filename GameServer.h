@@ -9,6 +9,8 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "Game.h"
+#include "OnlineGame.h"
 
 using namespace std;
 
@@ -24,10 +26,12 @@ private:
     int server;
     struct sockaddr_in server_addr;
     socklen_t size;
+    OnlineGame game;
 
 public:
     GameServer();
     int startServer();
+    void serverOnline();
 
 };
 

@@ -3,7 +3,7 @@
 #include "GameServer.h"
 
 
-GameServer::GameServer() : client(socket(AF_INET, SOCK_STREAM, 0)), portNum(1500), isExit(false), bufsize(1024), buffer(){
+GameServer::GameServer() : client(socket(AF_INET, SOCK_STREAM, 0)), portNum(1502), isExit(false), bufsize(1024), buffer(), game(3){
 
     startServer();
 }
@@ -28,53 +28,44 @@ int GameServer::startServer() {
     cout << "=> Waiting for players to join..." << endl;
     listen(client, 1);
 
-    int clientCount = 1;
     server = accept(client,(struct sockaddr *)&server_addr,&size);
 
     // first check if it is valid or not
-    if (server < 0)
+    if (server < 0) {
         cout << "=> Error on accepting..." << endl;
+    }
+
+    serverOnline();
+
+    close(client);
+
+    return 0;
+}
+
+
+
+void GameServer::serverOnline() {
 
     while (server > 0) {
         strcpy(buffer, "=> Server connected...\n");
         send(server, buffer, bufsize, 0);
-        cout << "=> Connected with player #" << clientCount << endl;
+        cout << "=> Connected with player #" << endl;
 
-
-
-
-        cout << "\n=> Enter # to end the connection\n" << endl;
+        cout << "\n=> Enter Ctrl-C to end the connection\n" << endl;
         cout << "Client: ";
         do {
-            recv(server, buffer, bufsize, 0);
-            cout << buffer << " ";
-            if (*buffer == '#') {
-                *buffer = '*';
-                isExit = true;
-            }
-        } while (*buffer != '*');
-
-        do {
-            cout << "\nServer: ";
-            do {
-                cin >> buffer;
-                send(server, buffer, bufsize, 0);
-                if (*buffer == '#') {
-                    send(server, buffer, bufsize, 0);
-                    *buffer = '*';
-                    isExit = true;
-                }
-            } while (*buffer != '*');
-
-            cout << "Client: ";
+            cout << "Wait for player..." << endl;
             do {
                 recv(server, buffer, bufsize, 0);
-                cout << buffer << " ";
-                if (*buffer == '#') {
-                    *buffer = '*';
-                    isExit = true;
-                }
-            } while (*buffer != '*');
+                cout << "Client: " << buffer << " " << endl;
+            } while (!recv(server, buffer, bufsize, 0));
+
+            do {
+                cout << "Server: ";
+                cin >> buffer;
+                send(server, buffer, bufsize, 0);
+            } while (!send(server, buffer, bufsize, 0));
+
         } while (!isExit);
 
         cout << "\n\n=> Connection terminated with IP " << inet_ntoa(server_addr.sin_addr);
@@ -83,16 +74,11 @@ int GameServer::startServer() {
         isExit = false;
         exit(1);
     }
-    close(client);
-
-    return 0;
 }
 
 
-
-
-int main(){
-
-    GameServer();
-    return 0;
-}
+//int main(){
+//
+//    GameServer gameServer = GameServer();
+//    return 0;
+//}

@@ -12,8 +12,8 @@ using namespace std;
 
 int main() {
 
-    //Game game(3);
-    GameServer gameServer();
+    Game game(3);
+    //GameServer gameServer();
 
     return 0;
 }
